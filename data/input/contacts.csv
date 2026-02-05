@@ -1,9 +1,9 @@
-contact_id,first_name,last_name,email,phone_number,address,city,state,zip
-1,John,Smith,  JOHN.SMITH@EXAMPLE.COM  ,(555) 123-4567,123 Main St,Austin,TX,78701
-2,Jane,Doe,jane.doe@example.com,555-123-4568,456 Oak Avenue,New York,NY,10001
-3,Bob,Johnson,BOB@EXAMPLE.COM,1-555-123-4569,789 Pine Rd,Los Angeles,CA,90001
-4,Alice,Williams,,555.123.4570,321 Elm Street,Chicago,IL,60601
-5,Charlie,Brown,charlie.brown@EXAMPLE.com,5551234571,654 Maple Dr,Houston,TX,77001
-6,Diana,Prince,  diana.prince@example.COM  ,(555) 123-45,987 Cedar Ln,Philadelphia,PA,19101
-7,Frank,Miller,frank.miller@example.com,555-123-4572,147 Birch Way,Phoenix,AZ,85001
-8,Grace,Wilson,GRACE.WILSON@EXAMPLE.COM,555.123.4573,258 Spruce Ave,San Antonio,TX,78201
+contact_id,first_name,last_name,email,phone_number,address,city,state,zip,expected_email,expected_phone_number,expected_address
+1,John,Smith,  JOHN.SMITH@EXAMPLE.COM  ,(555) 123-4567,123 Main St,Austin,TX,78701,john.smith@example.com,5551234567,123 Main Street
+2,Jane,Doe,jane.doe@example.com,555-123-4568,456 Oak Ave,New York,NY,10001,jane.doe@example.com,5551234568,456 Oak Avenue
+3,Bob,Johnson,,1-555-123-4569,789 Pine Rd,Los Angeles,CA,90001,,5551234569,789 Pine Road
+4,Alice,Williams,bademail,  555 123 4567  ,321 Elm Street,Chicago,IL,60601,,5551234567,321 Elm Street
+5,Charlie,Brown,a@b,555.123.4570,654 Maple Dr,Houston,TX,77001,,5551234570,654 Maple Drive
+6,Diana,Prince,diana@example.com,(555) 123-4572,987 Cedar Ln,Philadelphia,PA,19101,diana@example.com,5551234572,987 Cedar Lane
+7,Frank,Miller,frank.miller@example.com,(555) 123-45,147 Birch Way,Phoenix,AZ,85001,frank.miller@example.com,,147 Birch Way
+8,Grace,Wilson,GRACE.WILSON@EXAMPLE.COM,55512345678901,258 Spruce Ave,San Antonio,TX,78201,grace.wilson@example.com,,258 Spruce Avenue

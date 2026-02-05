@@ -1,5 +1,8 @@
 # Senior Data Engineer Exercise
 
+> **Branch notice:** This branch contains the **solution for version 1** of the exercise.  
+> **Interviewers and candidates** should use the **`main`** branch for the exercise (blank template, no solution).
+
 This repository contains a data transformation exercise for cleaning and normalizing contact data.
 
 ## Repository Structure
@@ -84,15 +87,15 @@ After setup, you can run the transformation script:
 python src/transforms.py
 
 # Or specify custom input and output paths
-python src/transforms.py data/input/contacts.csv data/output/contacts_cleaned.xlsx
+python src/transforms.py data/input/contacts.csv data/output/contacts_cleaned.csv
 ```
 
 The script will:
 1. Read the input CSV file
 2. Normalize email addresses (lowercase, trim whitespace)
-3. Normalize phone numbers (standard format: (XXX) XXX-XXXX)
+3. Normalize phone numbers to a single 10-digit string (strip whitespace and non-digits)
 4. Normalize addresses (standardize abbreviations, capitalize)
-5. Write the output to an Excel file (or CSV if specified)
+5. Write the output to a CSV file
 
 ## Running Tests
 
@@ -109,8 +112,6 @@ pytest test/ -v
 pytest test/ --cov=src
 ```
 
-**Note:** One test is intentionally incorrect and will fail initially. This is by design for the exercise.
-
 ## Data Transformation Details
 
 ### Email Normalization
@@ -119,10 +120,9 @@ pytest test/ --cov=src
 - Handles missing/empty values
 
 ### Phone Number Normalization
-- Removes punctuation
-- Formats as (XXX) XXX-XXXX for 10-digit numbers
-- Formats as 1-XXX-XXX-XXXX for 11-digit numbers with country code
-- Returns None for invalid lengths
+- **Input**: Any string (e.g. with spaces, parentheses, dashes, dots); treated as a standard 10-digit number once cleaned.
+- **Processing**: Removes all whitespace and non-digit characters; accepts 10 digits or 11 digits with leading US country code `1`.
+- **Output**: A single 10-digit string (e.g. `5551234567`). Returns `None` for invalid lengths.
 
 ### Address Normalization
 - Removes leading/trailing whitespace
@@ -136,7 +136,7 @@ The input CSV contains contact data with the following columns:
 - `first_name`: First name
 - `last_name`: Last name
 - `email`: Email address (may contain whitespace, mixed case)
-- `phone_number`: Phone number (various formats)
+- `phone_number`: Phone number (various input formats; normalized to a single 10-digit string with whitespace and non-digits removed)
 - `address`: Street address
 - `city`: City name
 - `state`: State abbreviation
@@ -144,16 +144,15 @@ The input CSV contains contact data with the following columns:
 
 The dataset includes intentionally dirty data:
 - Emails with extra spaces and mixed case
-- Phone numbers with various punctuation formats
-- One phone number with country code (1-XXX-XXX-XXXX)
+- Phone numbers with various punctuation formats (parentheses, dashes, dots, spaces); all normalized to a single 10-digit string
+- One phone number with country code (1-XXX-XXX-XXXX), normalized to 10 digits
 - One missing email
-- One invalid phone number length
+- One invalid phone number length (output as None)
 
 ## Dependencies
 
 - **pytest**: Testing framework
 - **pandas**: Data manipulation and analysis
-- **openpyxl**: Excel file support
 - **pydantic**: Data validation (available for use)
 
 ## License
