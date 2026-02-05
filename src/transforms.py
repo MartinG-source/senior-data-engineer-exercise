@@ -8,10 +8,10 @@ import re
 
 def normalize_email(email: Optional[str]) -> Optional[str]:
     """
-    Normalize email addresses by:
-    - Removing leading/trailing whitespace
-    - Converting to lowercase
-    - Returning None for empty strings
+    TODO:Normalize email addresses by:
+    1. Removing leading/trailing whitespace
+    2. Converting to lowercase
+    3. Returning None for empty strings
     
     Args:
         email: Email string to normalize
@@ -19,22 +19,15 @@ def normalize_email(email: Optional[str]) -> Optional[str]:
     Returns:
         Normalized email or None if empty
     """
-    if pd.isna(email) or email is None:
-        return None
-    
-    email_str = str(email).strip()
-    if not email_str:
-        return None
-    
-    return email_str.lower()
+    return None
 
 
 def normalize_phone(phone: Optional[str]) -> Optional[str]:
     """
-    Normalize phone numbers by:
-    - Removing all non-digit characters except leading '1' country code
-    - Formatting as (XXX) XXX-XXXX or 1-XXX-XXX-XXXX if country code present
-    - Returning None for invalid lengths
+    TODO: Normalize phone numbers by:
+    1. Removing all non-digit characters except leading '1' country code
+    2. Formatting as (XXX) XXX-XXXX or 1-XXX-XXX-XXXX if country code present
+    3. Returning None for invalid lengths
     
     Args:
         phone: Phone string to normalize
@@ -42,32 +35,15 @@ def normalize_phone(phone: Optional[str]) -> Optional[str]:
     Returns:
         Normalized phone in format (XXX) XXX-XXXX or None if invalid
     """
-    if pd.isna(phone) or phone is None:
-        return None
-    
-    phone_str = str(phone).strip()
-    if not phone_str:
-        return None
-    
-    # Extract digits
-    digits = re.sub(r'\D', '', phone_str)
-    
-    # Check for country code
-    if digits.startswith('1') and len(digits) == 11:
-        # US number with country code: format as 1-XXX-XXX-XXXX
-        return f"1-{digits[1:4]}-{digits[4:7]}-{digits[7:]}"
-    elif len(digits) == 10:
-        # Standard US number: format as (XXX) XXX-XXXX
-        return f"({digits[0:3]}) {digits[3:6]}-{digits[6:]}"
-    else:
-        # Invalid length
-        return None
+
+    return None
 
 
 def normalize_address(address: Optional[str]) -> Optional[str]:
     """
-    Normalize address by:
-    - Removing leading/trailing whitespace
+    TODO: Normalize address by:
+    1. Removing leading/trailing whitespace
+    DONE:
     - Standardizing common abbreviations
     - Capitalizing first letter of each word
     
@@ -79,8 +55,8 @@ def normalize_address(address: Optional[str]) -> Optional[str]:
     """
     if pd.isna(address) or address is None:
         return None
-    
-    address_str = str(address).strip()
+
+    address_str = str(address)
     if not address_str:
         return None
     

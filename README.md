@@ -75,6 +75,24 @@ source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
+## Interview / Task Instructions
+
+Follow a **test-driven development (TDD)** workflow for each transformation:
+
+1. **Write a failing test** for one transformation in `test/test_transforms.py`.
+2. **Run the test** and confirm it fails: `pytest test/ -v`
+3. **Implement the transformation** in `src/transforms.py` so the test passes.
+4. **Repeat** for the next transformation until all are done.
+
+### Transformations to Implement (TODOs)
+
+Complete the following in order:
+
+1. **Validate all tests pass** — Run `pytest test/ -v` and fix any failing tests so the suite is green before you start.
+2. **Address** (`normalize_address`) — Write a failing test in `test/test_transforms.py`, then implement in `src/transforms.py`: remove leading/trailing whitespace; standardize abbreviations (St→Street, Ave→Avenue, etc.); capitalize first letter of each word.
+3. **Email** (`normalize_email`) — Write a failing test, then implement: remove leading/trailing whitespace; convert to lowercase; return `None` for empty strings.
+4. **Phone** (`normalize_phone`) — Write a failing test, then implement: strip non-digits (keep leading `1` for country code); format as `(XXX) XXX-XXXX` or `1-XXX-XXX-XXXX`; return `None` for invalid lengths.
+
 ## Running the Transformation
 
 After setup, you can run the transformation script:
