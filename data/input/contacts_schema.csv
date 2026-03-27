@@ -1,0 +1,10 @@
+column_name,data_type,required,description
+contact_id,integer,yes,Unique contact identifier
+first_name,string,yes,First name as provided by source
+last_name,string,yes,Last name as provided by source
+email,string,no,May include whitespace and mixed case
+phone_number,string,no,May include punctuation and country code
+address,string,no,Street address that may include abbreviations
+city,string,no,City name
+state,string,no,US state code or free-text state value
+zip,string,no,US ZIP value that may include punctuation or ZIP+4

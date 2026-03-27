@@ -1,0 +1,11 @@
+column_name,data_type,required,normalization_rule
+contact_id,integer,yes,Preserve input value
+first_name,string,yes,Trim whitespace
+last_name,string,yes,Trim whitespace
+email,string,no,Trim then lowercase; empty becomes null
+phone_number,string,no,Keep digits only then format as (XXX) XXX-XXXX or 1-XXX-XXX-XXXX; invalid becomes null
+address,string,no,Trim; standardize abbreviations (St Ave Rd Dr Ln); title case
+city,string,no,Preserve input value
+state,string,no,Normalize to uppercase 2-letter code when possible; otherwise null
+zip,string,no,Normalize to 5-digit ZIP when possible; otherwise null
+contactable,boolean,yes,True when normalized email or normalized phone_number is not null

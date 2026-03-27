@@ -1,0 +1,9 @@
+event_id,contact_id,event_type,channel,event_ts,event_status
+evt-001,1,open,email,2026-01-14T08:00:00Z,success
+evt-002,1,click,email,2026-01-20T16:35:00Z,success
+evt-003,2,sms_reply,sms,2026-01-16T12:45:00Z,success
+evt-004,3,call_connected,phone,2025-12-15T10:10:00Z,success
+evt-005,4,bounce,email,2026-01-05T05:20:00Z,failed
+evt-006,5,sms_reply,sms,2025-10-10T20:00:00Z,success
+evt-007,6,unsubscribe,email,2026-01-10T07:30:00Z,blocked
+evt-008,8,open,email,2026-01-18T09:05:00Z,success

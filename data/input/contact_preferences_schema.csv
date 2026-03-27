@@ -1,0 +1,7 @@
+column_name,data_type,required,description
+contact_id,integer,yes,Foreign key to contacts.contact_id
+preferred_channel,string,no,Preferred communication channel (email|sms|phone|none)
+marketing_opt_in,string,no,Consent signal (yes|no|unknown)
+transactional_opt_in,string,no,Transactional message consent (yes|no|unknown)
+country,string,no,ISO-like country indicator used for channel assumptions
+last_updated_at,string,no,Source update timestamp in ISO-8601 format

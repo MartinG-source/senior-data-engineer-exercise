@@ -1,179 +1,141 @@
-# Senior Data Engineer Exercise
+# Senior Data Engineer — Pairing Exercise
 
-This repository contains a data transformation exercise for cleaning and normalizing contact data.
+## Overview
 
-## Repository Structure
+You are a data engineer at a marketing platform company. The CRM team has asked you to build a **contact enrichment pipeline** that cleans raw contact data, joins it with preference and engagement data, and produces an enriched output used for campaign targeting.
+
+This exercise is designed to be completed collaboratively during a live pairing session. We will work through it together using **test-driven development (TDD)**: write a failing test, implement the logic, then refactor.
+
+## What We're Evaluating
+
+- **TDD workflow** — Can you write a focused test before implementing logic?
+- **Data transformation skills** — Comfort with Pandas (or PySpark) for cleaning, normalizing, and joining datasets.
+- **Problem decomposition** — Can you break a complex, multi-dataset problem into small, testable steps?
+- **Communication** — Talk through your thinking as you go.
+
+## Repository Layout
 
 ```
 senior-data-engineer-exercise/
 ├── data/
 │   ├── input/
-│   │   └── contacts.csv          # Input data with dirty records
-│   └── output/                    # Output directory (created after transformation)
+│   │   ├── contacts.csv                    # Raw contact records (messy)
+│   │   ├── contacts_schema.csv             # Schema for contacts
+│   │   ├── contact_preferences.csv         # Channel & consent preferences
+│   │   ├── contact_preferences_schema.csv  # Schema for preferences
+│   │   ├── engagement_events.csv           # Historical engagement events
+│   │   ├── engagement_events_schema.csv    # Schema for events
+│   │   ├── target_schema.csv               # Target output schema
+│   │   └── transformation_constraints.csv  # Business rules / constraints
+│   └── output/
 ├── src/
-│   └── transforms.py              # Data transformation functions
+│   └── transforms.py          # Transformation functions (stubs provided)
 ├── test/
-│   └── test_transforms.py         # Test suite using pytest
-├── requirements.txt               # Python dependencies
-├── .gitignore                     # Git ignore rules
-├── .gitattributes                 # Cross-platform consistency
-└── README.md                      # This file
+│   └── test_transforms.py     # Test suite (2 passing examples provided)
+├── requirements.txt
+└── README.md
 ```
 
-## Prerequisites
-
-- Python 3.10 or 3.11
-- pip (Python package installer)
-
-## Setup Instructions
-
-### Windows PowerShell
-
-```powershell
-# Navigate to the repository directory
-cd senior-data-engineer-exercise
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-.\venv\Scripts\Activate.ps1
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Mac OS / Linux
+## Setup
 
 ```bash
-# Navigate to the repository directory
 cd senior-data-engineer-exercise
-
-# Create virtual environment
 python3 -m venv venv
-
-# Activate virtual environment
 source venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-### Git Bash (Windows)
+## Run Tests
 
 ```bash
-# Navigate to the repository directory
-cd senior-data-engineer-exercise
-
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-source venv/Scripts/activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-## Interview / Task Instructions
-
-Follow a **test-driven development (TDD)** workflow for each transformation:
-
-1. **Write a failing test** for one transformation in `test/test_transforms.py`.
-2. **Run the test** and confirm it fails: `pytest test/ -v`
-3. **Implement the transformation** in `src/transforms.py` so the test passes.
-4. **Repeat** for the next transformation until all are done.
-
-### Transformations to Implement (TODOs)
-
-Complete the following in order:
-
-1. **Validate all tests pass** — Run `pytest test/ -v` and fix any failing tests so the suite is green before you start.
-2. **Address** (`normalize_address`) — Write a failing test in `test/test_transforms.py`, then implement in `src/transforms.py`: remove leading/trailing whitespace; standardize abbreviations (St→Street, Ave→Avenue, etc.); capitalize first letter of each word.
-3. **Email** (`normalize_email`) — Write a failing test, then implement: remove leading/trailing whitespace; convert to lowercase; return `None` for empty strings.
-4. **Phone** (`normalize_phone`) — Write a failing test, then implement: strip non-digits (keep leading `1` for country code); format as `(XXX) XXX-XXXX` or `1-XXX-XXX-XXXX`; return `None` for invalid lengths.
-
-## Running the Transformation
-
-After setup, you can run the transformation script:
-
-```bash
-# Using default paths
-python src/transforms.py
-
-# Or specify custom input and output paths
-python src/transforms.py data/input/contacts.csv data/output/contacts_cleaned.xlsx
-```
-
-The script will:
-1. Read the input CSV file
-2. Normalize email addresses (lowercase, trim whitespace)
-3. Normalize phone numbers (standard format: (XXX) XXX-XXXX)
-4. Normalize addresses (standardize abbreviations, capitalize)
-5. Write the output to an Excel file (or CSV if specified)
-
-## Running Tests
-
-Run the test suite using pytest:
-
-```bash
-# Run all tests
-pytest test/
-
-# Run with verbose output
 pytest test/ -v
-
-# Run with coverage (if pytest-cov is installed)
-pytest test/ --cov=src
 ```
 
-**Note:** One test is intentionally incorrect and will fail initially. This is by design for the exercise.
+## The Data
 
-## Data Transformation Details
+You have three input datasets that share `contact_id` as a foreign key:
 
-### Email Normalization
-- Removes leading/trailing whitespace
-- Converts to lowercase
-- Handles missing/empty values
 
-### Phone Number Normalization
-- Removes punctuation
-- Formats as (XXX) XXX-XXXX for 10-digit numbers
-- Formats as 1-XXX-XXX-XXXX for 11-digit numbers with country code
-- Returns None for invalid lengths
+| Dataset                   | Description                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `contacts.csv`            | 8 contact records with intentionally messy data (whitespace, mixed case, inconsistent formats) |
+| `contact_preferences.csv` | Each contact's preferred channel and opt-in/opt-out status                                     |
+| `engagement_events.csv`   | Historical interaction events (opens, clicks, bounces, unsubscribes)                           |
 
-### Address Normalization
-- Removes leading/trailing whitespace
-- Standardizes abbreviations (St → Street, Ave → Avenue, etc.)
-- Capitalizes first letter of each word
 
-## Dataset Description
+Review the schema files and `transformation_constraints.csv` to understand the business rules.
 
-The input CSV contains contact data with the following columns:
-- `contact_id`: Unique identifier
-- `first_name`: First name
-- `last_name`: Last name
-- `email`: Email address (may contain whitespace, mixed case)
-- `phone_number`: Phone number (various formats)
-- `address`: Street address
-- `city`: City name
-- `state`: State abbreviation
-- `zip`: ZIP code
+---
 
-The dataset includes intentionally dirty data:
-- Emails with extra spaces and mixed case
-- Phone numbers with various punctuation formats
-- One phone number with country code (1-XXX-XXX-XXXX)
-- One missing email
-- One invalid phone number length
+## Exercise Steps
 
-## Dependencies
+Work through these in order. Each step follows the same TDD cycle:
+**Red** (write a failing test) → **Green** (implement just enough to pass) → **Refactor**
 
-- **pytest**: Testing framework
-- **pandas**: Data manipulation and analysis
-- **openpyxl**: Excel file support
-- **pydantic**: Data validation (available for use)
+### Step 1 — Verify Baseline
 
-## License
+Run `pytest test/ -v` and confirm the existing tests pass. These test `normalize_address`, which is already implemented as an example.
 
-This is an exercise repository for educational purposes.
+### Step 2 — Normalize Email
+
+Implement `normalize_email()` in `src/transforms.py`.
+
+Rules (from `transformation_constraints.csv`):
+
+- Remove leading/trailing whitespace
+- Convert to lowercase
+- Return `None` for empty or missing values
+
+### Step 3 — Normalize Phone
+
+Implement `normalize_phone()` in `src/transforms.py`.
+
+Rules:
+
+- Strip all non-digit characters
+- Valid formats: 10-digit, or 11-digit starting with `1`
+- Format as `(XXX) XXX-XXXX` or `1-(XXX) XXX-XXXX`
+- Return `None` for invalid inputs
+
+This is intentionally more complex — we'd like to see you break it into smaller pieces.
+
+### Step 4 — Normalize State & ZIP
+
+Implement `normalize_state()` and `normalize_zip()` in `src/transforms.py`.
+
+Rules:
+
+- **State**: Normalize to uppercase 2-letter code (e.g., `"Texas"` → `"TX"`, `" il "` → `"IL"`)
+- **ZIP**: Normalize to 5-digit string (e.g., `"90001-3344"` → `"90001"`, `"77001.0"` → `"77001"`)
+- Return `None` for values that can't be normalized
+
+### Step 5 — Contact Enrichment (Join + Derive)
+
+This is the core design challenge. Join all three datasets and derive new fields:
+
+
+| Field                         | Type    | Logic                                                                                                                                         |
+| ----------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `contactable`                 | boolean | `True` if the contact has a valid email OR valid phone after normalization                                                                    |
+| `preferred_reachable_channel` | string  | The contact's preferred channel, but only if that channel is actually valid after normalization. Falls back to any valid channel, or `"none"` |
+| `do_not_contact`              | boolean | `True` if both `marketing_opt_in` and `transactional_opt_in` are `"no"`, OR if the contact has an `unsubscribe` event                         |
+| `contact_quality_tier`        | string  | `"high"` / `"medium"` / `"low"` / `"unreachable"` based on valid channels + engagement recency                                                |
+
+
+**We don't expect you to finish this in the time allotted.** What we want to see is:
+
+1. How you decompose it into smaller functions
+2. What tests you'd write first
+3. How you handle the joins and edge cases
+4. How you reason about conflicting signals across datasets
+
+---
+
+## Notes
+
+- The 2 existing tests for `normalize_address` show the test pattern we expect.
+- Write tests that assert on specific inputs, not on row indices — the example tests use row indices for simplicity, but direct-input tests are better.
+- You're free to use Pandas or PySpark. The stubs use Pandas but you can switch.
+- Focus on clear, testable logic over clever one-liners.
+- Ask questions — this is a conversation, not an exam.
+

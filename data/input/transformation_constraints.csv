@@ -1,0 +1,16 @@
+constraint_id,scope,requirement
+C01,pipeline,Must process records from data/input/contacts.csv
+C02,email,Remove leading and trailing whitespace
+C03,email,Convert values to lowercase
+C04,email,Return null for empty or missing values
+C05,phone,Strip non-digit characters
+C06,phone,Allow 10-digit local format and 11-digit values starting with 1
+C07,phone,Format valid numbers as (XXX) XXX-XXXX or 1-XXX-XXX-XXXX
+C08,phone,Return null for invalid lengths
+C09,address,Remove leading and trailing whitespace
+C10,address,Standardize abbreviations St Ave Rd Dr Ln
+C11,address,Return title-cased address words
+C12,state,Normalize to uppercase 2-letter code when possible
+C13,zip,Normalize to 5-digit ZIP when possible
+C14,contactable,Set true when email or phone_number is valid after normalization; false otherwise
+C15,quality,No hardcoded outputs; transformations must be function-based

@@ -1,0 +1,7 @@
+column_name,data_type,required,description
+event_id,string,yes,Unique event identifier
+contact_id,integer,yes,Foreign key to contacts.contact_id
+event_type,string,yes,Interaction type (open|click|sms_reply|call_connected|bounce|unsubscribe)
+channel,string,yes,Channel where event occurred (email|sms|phone)
+event_ts,string,yes,Event timestamp in ISO-8601 format
+event_status,string,no,Outcome status (success|failed|spam|blocked)

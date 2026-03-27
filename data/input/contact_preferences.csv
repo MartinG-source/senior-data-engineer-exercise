@@ -1,0 +1,9 @@
+contact_id,preferred_channel,marketing_opt_in,transactional_opt_in,country,last_updated_at
+1,email,yes,yes,US,2026-01-10T09:12:00Z
+2,sms,yes,yes,US,2026-01-12T10:00:00Z
+3,phone,no,yes,US,2025-12-01T08:42:00Z
+4,email,unknown,yes,US,2026-01-07T19:40:00Z
+5,sms,yes,unknown,US,2026-01-02T14:10:00Z
+6,email,no,no,US,2026-01-09T06:55:00Z
+7,none,no,no,US,2025-11-20T04:05:00Z
+8,phone,yes,yes,US,2026-01-15T16:25:00Z
